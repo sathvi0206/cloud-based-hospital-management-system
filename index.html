@@ -1,0 +1,2100 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CloudCare - Hospital Management System</title>
+
+<style>
+
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    height: 70px;
+    background: linear-gradient(135deg, #0f766e, #2563eb);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #bae6fd;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cloud-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: 92%;
+    max-width: 1250px;
+    margin: 30px auto;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.welcome h1 {
+    color: #0f766e;
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.stat-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.stat-card h2 {
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+.stat-card p {
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 23px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-title h2 {
+    font-size: 19px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.primary {
+    background: #2563eb;
+    color: white;
+}
+
+.primary:hover {
+    background: #1d4ed8;
+}
+
+.success {
+    background: #16a34a;
+    color: white;
+}
+
+.danger {
+    background: #dc2626;
+    color: white;
+}
+
+.info {
+    background: #0891b2;
+    color: white;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #ecfeff;
+    color: #0f766e;
+    text-align: left;
+    padding: 13px;
+    font-size: 13px;
+}
+
+td {
+    padding: 13px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
+}
+
+.patient-name {
+    font-weight: bold;
+}
+
+.badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-orange {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+
+/* =========================
+   DOCTORS
+========================= */
+
+.doctor {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.doctor-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #dbeafe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-info strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.doctor-info small {
+    color: #64748b;
+}
+
+
+/* =========================
+   APPOINTMENT
+========================= */
+
+.appointment {
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.appointment-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.appointment small {
+    color: #64748b;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full {
+    grid-column: 1 / 3;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+}
+
+.form-submit {
+    margin-top: 15px;
+}
+
+
+/* =========================
+   CLOUD STORAGE
+========================= */
+
+.storage-box {
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.storage-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+    background: #dbeafe;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 68%;
+    height: 100%;
+    background: #2563eb;
+    border-radius: 10px;
+}
+
+
+/* =========================
+   BILLING
+========================= */
+
+.billing-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.billing-row strong {
+    color: #0f766e;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.65);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 28px;
+    border-radius: 18px;
+}
+
+.modal-box h2 {
+    margin-bottom: 20px;
+    color: #0f766e;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.close-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+
+/* =========================
+   NOTIFICATION
+========================= */
+
+.notification {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #0f172a;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: none;
+    z-index: 200;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 950px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    header {
+        padding: 0 4%;
+    }
+
+    .cloud-status {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        🏥 Cloud<span>Care</span>
+    </div>
+
+    <div class="header-right">
+
+        <div class="cloud-status">
+
+            <span class="status-dot"></span>
+
+            Cloud System Online
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- Welcome -->
+
+    <section class="welcome">
+
+        <h1>Cloud-Based Hospital Management System</h1>
+
+        <p>
+            Manage patients, doctors, appointments, medical records,
+            billing and hospital information through a centralized
+            cloud-based dashboard.
+        </p>
+
+    </section>
+
+
+    <!-- Statistics -->
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍⚕️
+            </div>
+
+            <h2 id="doctorCount">
+                48
+            </h2>
+
+            <p>
+                Doctors
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🧑‍🤝‍🧑
+            </div>
+
+            <h2 id="patientCount">
+                1,248
+            </h2>
+
+            <p>
+                Registered Patients
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📅
+            </div>
+
+            <h2 id="appointmentCount">
+                86
+            </h2>
+
+            <p>
+                Today's Appointments
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ☁️
+            </div>
+
+            <h2>
+                99.9%
+            </h2>
+
+            <p>
+                Cloud Availability
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- MAIN GRID -->
+
+    <section class="grid">
+
+
+        <!-- LEFT SIDE -->
+
+        <div>
+
+
+            <!-- PATIENTS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        🧑‍⚕️ Patient Management
+                    </h2>
+
+                    <button
+                        class="btn primary"
+                        onclick="openPatientModal()">
+
+                        + Add Patient
+
+                    </button>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="patientSearch"
+                        placeholder="Search patient..."
+                        onkeyup="searchPatients()">
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Patient
+                                </th>
+
+                                <th>
+                                    Age
+                                </th>
+
+                                <th>
+                                    Department
+                                </th>
+
+                                <th>
+                                    Doctor
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="patientTable">
+
+
+                            <tr>
+
+                                <td class="patient-name">
+                                    Ananya Sharma
+                                </td>
+
+                                <td>
+                                    28
+                                </td>
+
+                                <td>
+                                    Cardiology
+                                </td>
+
+                                <td>
+                                    Dr. Raj Kumar
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-green">
+                                        Active
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td class="patient-name">
+                                    Rahul Verma
+                                </td>
+
+                                <td>
+                                    35
+                                </td>
+
+                                <td>
+                                    Neurology
+                                </td>
+
+                                <td>
+                                    Dr. Priya Singh
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-blue">
+                                        Admitted
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td class="patient-name">
+                                    Meena Reddy
+                                </td>
+
+                                <td>
+                                    42
+                                </td>
+
+                                <td>
+                                    Orthopedics
+                                </td>
+
+                                <td>
+                                    Dr. Arjun Rao
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-green">
+                                        Active
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td class="patient-name">
+                                    Karthik Kumar
+                                </td>
+
+                                <td>
+                                    31
+                                </td>
+
+                                <td>
+                                    General Medicine
+                                </td>
+
+                                <td>
+                                    Dr. Sneha Patel
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-orange">
+                                        Pending
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td class="patient-name">
+                                    Divya Lakshmi
+                                </td>
+
+                                <td>
+                                    26
+                                </td>
+
+                                <td>
+                                    Dermatology
+                                </td>
+
+                                <td>
+                                    Dr. Meera Shah
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-green">
+                                        Active
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- APPOINTMENTS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        📅 Today's Appointments
+                    </h2>
+
+                    <button
+                        class="btn primary"
+                        onclick="openAppointmentModal()">
+
+                        + Appointment
+
+                    </button>
+
+                </div>
+
+
+                <div id="appointmentList">
+
+
+                    <div class="appointment">
+
+                        <div class="appointment-top">
+
+                            <strong>
+                                Ananya Sharma
+                            </strong>
+
+                            <span class="badge badge-blue">
+                                10:00 AM
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Cardiology • Dr. Raj Kumar
+                        </small>
+
+                    </div>
+
+
+                    <div class="appointment">
+
+                        <div class="appointment-top">
+
+                            <strong>
+                                Rahul Verma
+                            </strong>
+
+                            <span class="badge badge-blue">
+                                11:30 AM
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Neurology • Dr. Priya Singh
+                        </small>
+
+                    </div>
+
+
+                    <div class="appointment">
+
+                        <div class="appointment-top">
+
+                            <strong>
+                                Meena Reddy
+                            </strong>
+
+                            <span class="badge badge-blue">
+                                02:00 PM
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Orthopedics • Dr. Arjun Rao
+                        </small>
+
+                    </div>
+
+
+                    <div class="appointment">
+
+                        <div class="appointment-top">
+
+                            <strong>
+                                Divya Lakshmi
+                            </strong>
+
+                            <span class="badge badge-blue">
+                                04:00 PM
+                            </span>
+
+                        </div>
+
+                        <small>
+                            Dermatology • Dr. Meera Shah
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- BILLING -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        💳 Billing Summary
+                    </h2>
+
+                    <button
+                        class="btn success"
+                        onclick="generateBill()">
+
+                        Generate Bill
+
+                    </button>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Today's Revenue
+                    </span>
+
+                    <strong>
+                        ₹1,28,500
+                    </strong>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Pending Payments
+                    </span>
+
+                    <strong>
+                        ₹34,250
+                    </strong>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Insurance Claims
+                    </span>
+
+                    <strong>
+                        ₹75,800
+                    </strong>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Monthly Revenue
+                    </span>
+
+                    <strong>
+                        ₹28,45,600
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div>
+
+
+            <!-- DOCTORS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        👨‍⚕️ Doctors
+                    </h2>
+
+                    <span class="badge badge-green">
+                        48 Online
+                    </span>
+
+                </div>
+
+
+                <div class="doctor">
+
+                    <div class="doctor-avatar">
+                        👨‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <strong>
+                            Dr. Raj Kumar
+                        </strong>
+
+                        <small>
+                            Cardiology
+                        </small>
+
+                    </div>
+
+                    <span class="badge badge-green">
+                        Online
+                    </span>
+
+                </div>
+
+
+                <div class="doctor">
+
+                    <div class="doctor-avatar">
+                        👩‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <strong>
+                            Dr. Priya Singh
+                        </strong>
+
+                        <small>
+                            Neurology
+                        </small>
+
+                    </div>
+
+                    <span class="badge badge-green">
+                        Online
+                    </span>
+
+                </div>
+
+
+                <div class="doctor">
+
+                    <div class="doctor-avatar">
+                        👨‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <strong>
+                            Dr. Arjun Rao
+                        </strong>
+
+                        <small>
+                            Orthopedics
+                        </small>
+
+                    </div>
+
+                    <span class="badge badge-orange">
+                        Busy
+                    </span>
+
+                </div>
+
+
+                <div class="doctor">
+
+                    <div class="doctor-avatar">
+                        👩‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <strong>
+                            Dr. Meera Shah
+                        </strong>
+
+                        <small>
+                            Dermatology
+                        </small>
+
+                    </div>
+
+                    <span class="badge badge-green">
+                        Online
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CLOUD STORAGE -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        ☁️ Cloud Storage
+                    </h2>
+
+                    <span>
+                        68%
+                    </span>
+
+                </div>
+
+
+                <div class="storage-box">
+
+                    <div class="storage-top">
+
+                        <span>
+                            Hospital Data
+                        </span>
+
+                        <strong>
+                            680 GB / 1 TB
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div class="progress"></div>
+
+                    </div>
+
+
+                    <p style="
+                        margin-top:10px;
+                        color:#64748b;
+                        font-size:12px;
+                    ">
+
+                        Patient records, reports and
+                        hospital documents are securely
+                        synchronized with cloud storage.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYSTEM STATUS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        🖥️ System Status
+                    </h2>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Cloud Server
+                    </span>
+
+                    <span class="badge badge-green">
+                        Healthy
+                    </span>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Database
+                    </span>
+
+                    <span class="badge badge-green">
+                        Connected
+                    </span>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Backup
+                    </span>
+
+                    <span class="badge badge-green">
+                        Completed
+                    </span>
+
+                </div>
+
+
+                <div class="billing-row">
+
+                    <span>
+                        Security
+                    </span>
+
+                    <span class="badge badge-green">
+                        Protected
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="btn primary"
+                    style="width:100%;margin-bottom:10px;"
+                    onclick="openPatientModal()">
+
+                    🧑 Add New Patient
+
+                </button>
+
+
+                <button
+                    class="btn info"
+                    style="width:100%;margin-bottom:10px;"
+                    onclick="openAppointmentModal()">
+
+                    📅 Book Appointment
+
+                </button>
+
+
+                <button
+                    class="btn success"
+                    style="width:100%;"
+                    onclick="generateBill()">
+
+                    💳 Generate Bill
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ================= PATIENT MODAL ================= -->
+
+<div
+    class="modal"
+    id="patientModal">
+
+    <div class="modal-box">
+
+        <h2>
+            ➕ Add New Patient
+        </h2>
+
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Patient Name
+                </label>
+
+                <input
+                    type="text"
+                    id="patientName"
+                    placeholder="Enter patient name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Age
+                </label>
+
+                <input
+                    type="number"
+                    id="patientAge"
+                    placeholder="Enter age">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Department
+                </label>
+
+                <select id="patientDepartment">
+
+                    <option>
+                        Cardiology
+                    </option>
+
+                    <option>
+                        Neurology
+                    </option>
+
+                    <option>
+                        Orthopedics
+                    </option>
+
+                    <option>
+                        General Medicine
+                    </option>
+
+                    <option>
+                        Dermatology
+                    </option>
+
+                    <option>
+                        Pediatrics
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Doctor
+                </label>
+
+                <select id="patientDoctor">
+
+                    <option>
+                        Dr. Raj Kumar
+                    </option>
+
+                    <option>
+                        Dr. Priya Singh
+                    </option>
+
+                    <option>
+                        Dr. Arjun Rao
+                    </option>
+
+                    <option>
+                        Dr. Meera Shah
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn close-btn"
+                onclick="closePatientModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="addPatient()">
+
+                Add Patient
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= APPOINTMENT MODAL ================= -->
+
+<div
+    class="modal"
+    id="appointmentModal">
+
+    <div class="modal-box">
+
+        <h2>
+            📅 Book Appointment
+        </h2>
+
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+
+                <label>
+                    Patient Name
+                </label>
+
+                <input
+                    type="text"
+                    id="appointmentPatient"
+                    placeholder="Enter patient name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Doctor
+                </label>
+
+                <select id="appointmentDoctor">
+
+                    <option>
+                        Dr. Raj Kumar
+                    </option>
+
+                    <option>
+                        Dr. Priya Singh
+                    </option>
+
+                    <option>
+                        Dr. Arjun Rao
+                    </option>
+
+                    <option>
+                        Dr. Meera Shah
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Time
+                </label>
+
+                <input
+                    type="time"
+                    id="appointmentTime">
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn close-btn"
+                onclick="closeAppointmentModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="addAppointment()">
+
+                Book Appointment
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= NOTIFICATION ================= -->
+
+<div
+    class="notification"
+    id="notification">
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 CloudCare |
+    Cloud-Based Hospital Management System
+
+</footer>
+
+
+<script>
+
+/* =========================
+   NOTIFICATION
+========================= */
+
+function showNotification(message) {
+
+    const notification =
+        document.getElementById("notification");
+
+    notification.textContent = message;
+
+    notification.style.display = "block";
+
+    setTimeout(function() {
+
+        notification.style.display = "none";
+
+    }, 3000);
+
+}
+
+
+/* =========================
+   PATIENT MODAL
+========================= */
+
+function openPatientModal() {
+
+    document.getElementById(
+        "patientModal"
+    ).style.display = "flex";
+
+}
+
+
+function closePatientModal() {
+
+    document.getElementById(
+        "patientModal"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   ADD PATIENT
+========================= */
+
+function addPatient() {
+
+    const name =
+        document.getElementById(
+            "patientName"
+        ).value.trim();
+
+    const age =
+        document.getElementById(
+            "patientAge"
+        ).value;
+
+    const department =
+        document.getElementById(
+            "patientDepartment"
+        ).value;
+
+    const doctor =
+        document.getElementById(
+            "patientDoctor"
+        ).value;
+
+
+    if (name === "" || age === "") {
+
+        showNotification(
+            "⚠️ Please enter patient name and age."
+        );
+
+        return;
+
+    }
+
+
+    const table =
+        document.getElementById(
+            "patientTable"
+        );
+
+
+    const row =
+        document.createElement("tr");
+
+
+    row.innerHTML = `
+
+        <td class="patient-name">
+            ${escapeHTML(name)}
+        </td>
+
+        <td>
+            ${escapeHTML(age)}
+        </td>
+
+        <td>
+            ${escapeHTML(department)}
+        </td>
+
+        <td>
+            ${escapeHTML(doctor)}
+        </td>
+
+        <td>
+            <span class="badge badge-green">
+                Active
+            </span>
+        </td>
+
+    `;
+
+
+    table.prepend(row);
+
+
+    let count =
+        parseInt(
+            document.getElementById(
+                "patientCount"
+            ).textContent.replace(",", "")
+        );
+
+
+    count++;
+
+
+    document.getElementById(
+        "patientCount"
+    ).textContent =
+        count.toLocaleString();
+
+
+    closePatientModal();
+
+
+    document.getElementById(
+        "patientName"
+    ).value = "";
+
+    document.getElementById(
+        "patientAge"
+    ).value = "";
+
+
+    showNotification(
+        "✅ Patient added successfully!"
+    );
+
+}
+
+
+/* =========================
+   SEARCH PATIENT
+========================= */
+
+function searchPatients() {
+
+    const search =
+        document.getElementById(
+            "patientSearch"
+        ).value.toLowerCase();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#patientTable tr"
+        );
+
+
+    rows.forEach(function(row) {
+
+        const text =
+            row.textContent.toLowerCase();
+
+
+        if (text.includes(search)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================
+   APPOINTMENT MODAL
+========================= */
+
+function openAppointmentModal() {
+
+    document.getElementById(
+        "appointmentModal"
+    ).style.display = "flex";
+
+}
+
+
+function closeAppointmentModal() {
+
+    document.getElementById(
+        "appointmentModal"
+    ).style.display = "none";
+
+}
+
+
+/* =========================
+   ADD APPOINTMENT
+========================= */
+
+function addAppointment() {
+
+    const patient =
+        document.getElementById(
+            "appointmentPatient"
+        ).value.trim();
+
+    const doctor =
+        document.getElementById(
+            "appointmentDoctor"
+        ).value;
+
+    const time =
+        document.getElementById(
+            "appointmentTime"
+        ).value;
+
+
+    if (patient === "" || time === "") {
+
+        showNotification(
+            "⚠️ Please enter patient name and time."
+        );
+
+        return;
+
+    }
+
+
+    const list =
+        document.getElementById(
+            "appointmentList"
+        );
+
+
+    const appointment =
+        document.createElement("div");
+
+
+    appointment.className =
+        "appointment";
+
+
+    let displayTime =
+        convertTime(time);
+
+
+    appointment.innerHTML = `
+
+        <div class="appointment-top">
+
+            <strong>
+                ${escapeHTML(patient)}
+            </strong>
+
+            <span class="badge badge-blue">
+                ${displayTime}
+            </span>
+
+        </div>
+
+        <small>
+            General Consultation • ${escapeHTML(doctor)}
+        </small>
+
+    `;
+
+
+    list.prepend(appointment);
+
+
+    let count =
+        parseInt(
+            document.getElementById(
+                "appointmentCount"
+            ).textContent
+        );
+
+
+    count++;
+
+
+    document.getElementById(
+        "appointmentCount"
+    ).textContent = count;
+
+
+    closeAppointmentModal();
+
+
+    document.getElementById(
+        "appointmentPatient"
+    ).value = "";
+
+
+    document.getElementById(
+        "appointmentTime"
+    ).value = "";
+
+
+    showNotification(
+        "📅 Appointment booked successfully!"
+    );
+
+}
+
+
+/* =========================
+   TIME FORMAT
+========================= */
+
+function convertTime(time) {
+
+    const parts =
+        time.split(":");
+
+    let hour =
+        parseInt(parts[0]);
+
+    const minute =
+        parts[1];
+
+    let suffix = "AM";
+
+
+    if (hour >= 12) {
+
+        suffix = "PM";
+
+    }
+
+
+    if (hour > 12) {
+
+        hour -= 12;
+
+    }
+
+
+    if (hour === 0) {
+
+        hour = 12;
+
+    }
+
+
+    return hour + ":" + minute + " " + suffix;
+
+}
+
+
+/* =========================
+   GENERATE BILL
+========================= */
+
+function generateBill() {
+
+    const billNumber =
+        Math.floor(
+            Math.random() * 90000
+        ) + 10000;
+
+
+    showNotification(
+        "💳 Bill #" +
+        billNumber +
+        " generated successfully!"
+    );
+
+}
+
+
+/* =========================
+   HTML SECURITY
+========================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   CLOSE MODALS
+========================= */
+
+window.onclick = function(event) {
+
+    const patientModal =
+        document.getElementById(
+            "patientModal"
+        );
+
+    const appointmentModal =
+        document.getElementById(
+            "appointmentModal"
+        );
+
+
+    if (event.target === patientModal) {
+
+        closePatientModal();
+
+    }
+
+
+    if (event.target === appointmentModal) {
+
+        closeAppointmentModal();
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
+```
